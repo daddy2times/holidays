@@ -1,0 +1,29 @@
+#!/bin/sh
+
+USAGE="usage: app_ctrl [ start | stop | restart | status ]"
+
+if [ "$1" = "start" ]; then
+  echo "starting app... "
+  unicorn -c ./unicorn.rb -E production -D -l 134.174.91.12:9999
+  echo "done"
+elif [ "$1" = "stop" ]; then
+  echo -n "stopping app... "
+  kill -TERM `cat tmp/pids/unicorn.pid`
+  sleep 1
+  rm -f tmp/pids/unicorn.pid
+  rm -f tmp/sockets/unicorn.sock
+  echo "done"
+elif [ "$1" = "restart" ]; then
+  echo -n "restarting app... "
+  kill -HUP `cat tmp/pids/unicorn.pid`
+  echo "done"
+elif [ "$1" = "status" ]; then
+  process=`ps ax | grep "unicorn master" | grep -v grep | cut -d" " -f1`
+  if [ "$process" ]; then
+    echo "Running with PID: $process"
+  else
+    echo "Doesn't seem to be running"
+  fi
+else
+  echo $USAGE
+fi
