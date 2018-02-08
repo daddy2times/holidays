@@ -1,6 +1,6 @@
 # set path to app that will be used to configure unicorn, 
 # note the trailing slash in this example
-@dir = "/var/www/rails/webservices/holidays/"
+@dir = "/home/dan/projects/holidays/"
 
 worker_processes 2
 working_directory @dir
@@ -15,5 +15,5 @@ listen "#{@dir}tmp/sockets/unicorn.sock", :backlog => 64
 pid "#{@dir}tmp/pids/unicorn.pid"
 
 # Set log file paths
-stderr_path "#{@dir}log/unicorn.stderr.log"
-stdout_path "#{@dir}log/unicorn.stdout.log"
+stderr_path "#{@dir}log/unicorn.log"
+stdout_path "#{@dir}log/unicorn.log"
